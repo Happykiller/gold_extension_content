@@ -3,7 +3,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 
 import './i18n';
-import App from "./component/app";
+import Import from "./component/import";
 import packageInfo from '../package.json';
 
 console.log(`Gold content (${packageInfo.version})`);
@@ -34,7 +34,7 @@ var mutationObserver = new MutationObserver(function(mutations) {
         const root = createRoot(container);
         root.render(
           <React.StrictMode>
-              <App />
+            <Import />
           </React.StrictMode>
         );
         console.log('Injection');
