@@ -1,3 +1,4 @@
 export enum ORDERS {
-  HELLO = 'hello'
+  HELLO = 'hello',
+  CREATE_OPERATION = 'createOperation'
 }
