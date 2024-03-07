@@ -43,11 +43,6 @@ const Import = () => {
       type = 2;
     }
     const amount = value?.replaceAll('-', '').replaceAll(',', '.');
-    console.log('name', name);
-    console.log('value', value);
-    console.log('amount', amount);
-    console.log('type', type);
-    console.log('description', description);
     const response:BackgroundServiceModel = await inversify.backgroundService.send({
       name: ORDERS.CREATE_OPERATION,
       data: {
@@ -64,7 +59,6 @@ const Import = () => {
     if(response.data.id) {
       setCurrentMsg(`Operation crée avec l'id:${response.data.id}`);
     }
-    console.log(response)
   }
 
   return (
