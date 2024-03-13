@@ -1,6 +1,14 @@
 {
-  "icon.title": "Kalydian",
-  "modal.close": "Fermer",
-  "modal.connect": "Merci de vous connecter",
-  "modal.empty": "Pas d'items"
+  "common": {
+    "done": "Valider",
+    "cancel": "Annuler",
+    "clear": "Aucun",
+    "create": "Créer",
+    "loading": "Chargement..."
+  },
+  "operation": {
+    "third-otherDebit": "Débiteur",
+    "third-otherCredit": "Créditeur",
+    "category-other": "Autre"
+  }
 }

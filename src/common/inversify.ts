@@ -1,17 +1,23 @@
-import config from './config';
-import MediaService from '../services/media/media.service';
-import MediaServiceChrome from '../services/media/media.service.chrome';
-import MediaServiceBrowser from '../services/media/media.service.browser';
-import BackgroundService from '../services/background/background.service';
-import BackgroundServiceFake from '../services/background/background.service.fake';
-import BackgroundServiceReal from '../services/background/background.service.real';
+import config from '../common/config';
+import MediaService from '../service/media/media.service';
+import MediaServiceChrome from '../service/media/media.service.chrome';
+import MediaServiceBrowser from '../service/media/media.service.browser';
+import BackgroundService from '../service/background/background.service';
+import GetOpeThirdsUsecase from '../usecase/operation/getOpeThirds.usecase';
+import BackgroundServiceFake from '../service/background/background.service.fake';
+import BackgroundServiceReal from '../service/background/background.service.real';
+import GetOpeCategoriesUsecase from '../usecase/operation/getOpeCategories.usecase';
 
 export class Inversify {
-  backgroundService: BackgroundService;
   mediaService: MediaService;
+  backgroundService: BackgroundService;
+  getOpeThirdsUsecase: GetOpeThirdsUsecase;
+  getOpeCategoriesUsecase: GetOpeCategoriesUsecase;
 
   constructor() {
     // Usecases
+    this.getOpeThirdsUsecase = new GetOpeThirdsUsecase(this);
+    this.getOpeCategoriesUsecase = new GetOpeCategoriesUsecase(this);
 
     // Services
     if (config.app_env === 'prod') {

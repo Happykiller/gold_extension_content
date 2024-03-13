@@ -1,4 +1,6 @@
 export enum ORDERS {
   HELLO = 'hello',
-  CREATE_OPERATION = 'createOperation'
+  GET_OPE_THIRDS = 'GET_OPE_THIRDS',
+  CREATE_OPERATION = 'createOperation',
+  GET_OPE_CATEGORIES = 'GET_OPE_CATEGORIES',
 }

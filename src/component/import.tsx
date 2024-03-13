@@ -1,10 +1,14 @@
 import $ from "jquery";
 import dayjs from 'dayjs';
 import * as React from 'react';
-import inversify from "../common/inversify";
-import { ORDERS } from "../common/orders";
+import { Trans } from "react-i18next";
 import styled from "styled-components";
-import { BackgroundServiceModel } from '../services/models/background.service.model';
+
+import { ORDERS } from "../common/orders";
+import inversify from "../common/inversify";
+import { OpeThirdsSelect } from "../component/opeThirdsSelect";
+import { OpeCategoriesSelect } from "../component/opeCategoriesSelect";
+import { BackgroundServiceModel } from '../service/models/background.service.model';
 
 const Button = styled.button`
   background: white;
@@ -64,88 +68,24 @@ const Import = () => {
   return (
     <Box className='gold_injection gold_content_div'>
       <div>
-        <select
+        <OpeCategoriesSelect
           value={currentCategory}
-          onChange={(e) => { 
+          label={<Trans>import.category</Trans>}
+          onChange={(e:any) => { 
             e.preventDefault();
             setCurrentCategory(e.target.value);
           }}
-        >
-          <option value='2'>Alimentation</option>
-          <option value='1'>Autre catégorie</option>
-          <option value='19'>Assurance</option>
-          <option value='4'>Cadeau</option>
-          <option value='20'>Charges</option>
-          <option value='9'>Fabrice</option>
-          <option value='16'>FAI</option>
-          <option value='10'>Frais	banquaire, etc</option>
-          <option value='21'>Geek</option>
-          <option value='8'>Illidan</option>
-          <option value='17'>Immobilier</option>
-          <option value='15'>Impôts</option>
-          <option value='14'>Jeux</option>
-          <option value='6'>Mobilité</option>
-          <option value='5'>Prêt</option>
-          <option value='13'>Régulation</option>
-          <option value='12'>Revenue</option>
-          <option value='18'>Salaire</option>
-          <option value='3'>Santé</option>
-          <option value='11'>Sortie</option>
-          <option value='7'>Vacances</option>
-        </select>
+        />
       </div>
       <div>
-        <select
+        <OpeThirdsSelect
           value={currentThird}
-          onChange={(e) => { 
+          label={<Trans>import.third</Trans>}
+          onChange={(e:any) => { 
             e.preventDefault();
             setCurrentThird(e.target.value);
           }}
-        >
-          <option value='20'>Amazon</option>
-          <option value='26'>Aréa</option>
-          <option value='11'>Aurore Mondésir</option>
-          <option value='8'>Banque</option>
-          <option value='35'>BBCEP</option>
-          <option value='10'>Blizzard</option>
-          <option value='40'>Botanic</option>
-          <option value='34'>Boursorama</option>
-          <option value='25'>Carrefour</option>
-          <option value='14'>Castorama</option>
-          <option value='31'>Cinéma</option>
-          <option value='28'>CPAM</option>
-          <option value='15'>Darty</option>
-          <option value='18'>Decathlon</option>
-          <option value='21'>Delivroo</option>
-          <option value='9'>Employeur</option>
-          <option value='4'>Epicerie Asiatique</option>
-          <option value='2'>Entreprise créditrice</option>
-          <option value='1'>Entreprise débitrice</option>
-          <option value='39'>Essence</option>
-          <option value='43'>FitnessBoutique</option>
-          <option value='3'>Géant</option>
-          <option value='6'>Généraliste</option>
-          <option value='42'>Google</option>
-          <option value='16'>Ikea</option>
-          <option value='23'>Le verre à soi</option>
-          <option value='38'>LeroyMerlin</option>
-          <option value='37'>Locataires</option>
-          <option value='19'>Mac Donald</option>
-          <option value='36'>Médecin</option>
-          <option value='17'>Micromania</option>
-          <option value='29'>Mutuelle</option>
-          <option value='13'>Nano Mireille</option>
-          <option value='5'>Ophtalmologue</option>
-          <option value='30'>Orange</option>
-          <option value='24'>Parking</option>
-          <option value='22'>Pharmacie</option>
-          <option value='32'>Restauration</option>
-          <option value='7'>Shopping</option>
-          <option value='33'>Syndic</option>
-          <option value='41'>TIER</option>
-          <option value='12'>Trésor public</option>
-          <option value='27'>Vinted</option>
-        </select>
+        />
       </div>
       <div>
         <Button

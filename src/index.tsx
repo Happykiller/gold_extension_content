@@ -37,7 +37,6 @@ var mutationObserver = new MutationObserver(function(mutations) {
             <Import />
           </React.StrictMode>
         );
-        console.log('Injection');
       }
     }
   });
