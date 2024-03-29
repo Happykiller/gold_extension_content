@@ -49,6 +49,32 @@ export default class BackgroundServiceFake extends BackgroundService {
           message: CODES.CREATE_OPERATION_FAIL
         };
       }
+    } else if (dto.name === ORDERS.GET_OPE_CATEGORIES) {
+      /* istanbul ignore next */
+      if (true) {
+        response = {
+          message: CODES.SUCCESS,
+          data: []
+        };
+      } else {
+        /* istanbul ignore next */
+        response = {
+          message: CODES.FAIL
+        };
+      }
+    } else if (dto.name === ORDERS.GET_OPE_THIRDS) {
+      /* istanbul ignore next */
+      if (true) {
+        response = {
+          message: CODES.SUCCESS,
+          data: []
+        };
+      } else {
+        /* istanbul ignore next */
+        response = {
+          message: CODES.FAIL
+        };
+      }
     } else {
       throw new Error('order not implemented')
     }

@@ -39,15 +39,35 @@ const Import = () => {
 
   const handleClick = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const name = $('.transaction-name').text();
-    const value = $('.transaction-amount').attr('title');
-    const description = $('.cell-content-subtitle:first').text();
+
+    /**
+     * Get value
+     */
+    const $amount = $('.balance.large')
+      .filter(function() {
+          return this.classList[2] == null;
+      });
+    const value = $amount.text().trim();
+
+    /**
+     * Get description
+     */
+
+    const $libele = $("p").filter(function() {
+      return $(this).text().trim().toLowerCase() === 'libellé';
+    });
+    const description = $libele.parent().next().text().trim().split('-')[2].trim();
+
+    // Define type
     let type = 1;
     if (value?.includes('-')) {
       type = 2;
     }
-    const amount = value?.replaceAll('-', '').replaceAll(',', '.');
-    const response:BackgroundServiceModel = await inversify.backgroundService.send({
+
+    // Define amount
+    const amount = value?.replaceAll('-', '').replaceAll(',', '.').replaceAll('€', '');
+
+    const data = {
       name: ORDERS.CREATE_OPERATION,
       data: {
         amount: parseFloat(amount??'0'),
@@ -59,7 +79,9 @@ const Import = () => {
         third_id: parseInt(currentThird),
         category_id: parseInt(currentCategory)
       }
-    });
+    };
+    console.log(data);
+    const response:BackgroundServiceModel = await inversify.backgroundService.send(data);
     if(response.data.id) {
       setCurrentMsg(`Operation crée avec l'id:${response.data.id}`);
     }

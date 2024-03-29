@@ -10,12 +10,13 @@ console.log(`Gold content (${packageInfo.version})`);
 
 // Create your observer
 var mutationObserver = new MutationObserver(function(mutations) {
+  let icontinue = true;
   mutations.forEach(function(mutation) {
-    const isTransactionDetail = $(mutation.addedNodes).hasClass("transaction-container");
+    const $elt = $(mutation.addedNodes).find("h3");
     const isGoldInjection = $(mutation.addedNodes).hasClass("gold_injection");
-    if (isTransactionDetail && !isGoldInjection) {
-      let $actions = $('.template-section-title');
-      if ($actions.length) {
+    $elt.parent().each(function( index ) {
+      if ($( this ).text().trim().toLowerCase() === 'actions' && !isGoldInjection && icontinue) {
+        icontinue = false;
         let $div = $(`
   <compte-flag-transaction-cell class="gold_injection ng-star-inserted">
     <ui-cell class="cell-info clickable flag-transaction-cell">
@@ -29,7 +30,7 @@ var mutationObserver = new MutationObserver(function(mutations) {
       </div>
     </ui-cell>
   </compte-flag-transaction-cell>`);
-        $actions.after($div);
+        $( this ).after($div);
         const container = document.getElementById("gold_root") as HTMLElement;
         const root = createRoot(container);
         root.render(
@@ -38,7 +39,7 @@ var mutationObserver = new MutationObserver(function(mutations) {
           </React.StrictMode>
         );
       }
-    }
+    });
   });
 });
 
