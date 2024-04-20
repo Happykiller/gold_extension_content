@@ -32,6 +32,7 @@ const Box = styled.div`
   display: flex;
   flex-flow: column;
 `
+
 const Import = () => {
   const [currentMsg, setCurrentMsg] = React.useState('');
   const [currentCategory, setCurrentCategory] = React.useState('1');
@@ -47,7 +48,9 @@ const Import = () => {
       .filter(function() {
           return this.classList[2] == null;
       });
+    inversify.loggerService.debug('$amount', $amount);
     const value = $amount.text().trim();
+    inversify.loggerService.debug('value', value);
 
     /**
      * Get description
@@ -56,16 +59,20 @@ const Import = () => {
     const $libele = $("p").filter(function() {
       return $(this).text().trim().toLowerCase() === 'libellé';
     });
-    const description = $libele.parent().next().text().trim().split('-')[2].trim();
+    inversify.loggerService.debug('$libele', $libele);
+    const description = $libele.parent().next().text().trim();
+    inversify.loggerService.debug('description', description);
 
     // Define type
     let type = 1;
     if (value?.includes('-')) {
       type = 2;
     }
+    inversify.loggerService.debug('type', type)
 
     // Define amount
-    const amount = value?.replaceAll('-', '').replaceAll(',', '.').replaceAll('€', '');
+    const amount = value?.replaceAll('+', '').replaceAll('-', '').replaceAll(',', '.').replaceAll('€', '');
+    inversify.loggerService.debug('amount', amount)
 
     const data = {
       name: ORDERS.CREATE_OPERATION,
@@ -80,7 +87,7 @@ const Import = () => {
         category_id: parseInt(currentCategory)
       }
     };
-    console.log(data);
+    inversify.loggerService.debug('data', data);
     const response:BackgroundServiceModel = await inversify.backgroundService.send(data);
     if(response.data.id) {
       setCurrentMsg(`Operation crée avec l'id:${response.data.id}`);

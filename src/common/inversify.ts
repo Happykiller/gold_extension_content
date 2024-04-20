@@ -1,5 +1,7 @@
 import config from '../common/config';
 import MediaService from '../service/media/media.service';
+import LoggerService from '../service/logger/logger.service';
+import LoggerServiceReal from '../service/logger/logger.service.real';
 import MediaServiceChrome from '../service/media/media.service.chrome';
 import MediaServiceBrowser from '../service/media/media.service.browser';
 import BackgroundService from '../service/background/background.service';
@@ -10,6 +12,7 @@ import GetOpeCategoriesUsecase from '../usecase/operation/getOpeCategories.useca
 
 export class Inversify {
   mediaService: MediaService;
+  loggerService: LoggerService;
   backgroundService: BackgroundService;
   getOpeThirdsUsecase: GetOpeThirdsUsecase;
   getOpeCategoriesUsecase: GetOpeCategoriesUsecase;
@@ -20,6 +23,7 @@ export class Inversify {
     this.getOpeCategoriesUsecase = new GetOpeCategoriesUsecase(this);
 
     // Services
+    this.loggerService = new LoggerServiceReal();
     if (config.app_env === 'prod') {
       this.backgroundService = new BackgroundServiceReal(chrome);
       this.mediaService = new MediaServiceChrome(chrome);
