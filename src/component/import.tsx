@@ -56,11 +56,11 @@ const Import = () => {
      * Get description
      */
 
-    const $libele = $("p").filter(function() {
+    const $libele = $("dt").filter(function() {
       return $(this).text().trim().toLowerCase() === 'libellé';
     });
     inversify.loggerService.debug('$libele', $libele);
-    const description = $libele.parent().next().text().trim();
+    const description = $libele.next('dd').text().trim();
     inversify.loggerService.debug('description', description);
 
     // Define type
@@ -71,7 +71,7 @@ const Import = () => {
     inversify.loggerService.debug('type', type)
 
     // Define amount
-    const amount = value?.replaceAll('+', '').replaceAll('-', '').replaceAll(',', '.').replaceAll('€', '');
+    const amount = value?.replaceAll('+', '').replaceAll('-', '').replaceAll(',', '.').replaceAll('€', '').replaceAll(' ', '');
     inversify.loggerService.debug('amount', amount)
 
     const data = {

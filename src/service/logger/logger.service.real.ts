@@ -7,14 +7,12 @@ export default class LoggerServiceReal implements LoggerService {
   }
 
   debug(...args : any[]): void {
-    if (config.app_env !== 'prod') {
+    if (config.app_debug) {
       console.debug(args);
     }
   }
 
   error(...args : any[]): void {
-    if (config.app_env !== 'prod') {
-      console.error(args);
-    }
+    console.error(args);
   }
 } 
