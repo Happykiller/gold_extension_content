@@ -6,6 +6,8 @@ import styled from "styled-components";
 
 import { ORDERS } from "../common/orders";
 import inversify from "../common/inversify";
+import { useFlash } from '../hook/useFlash';
+import { FlashMessage } from '../component/flashMessage';
 import { OpeThirdsSelect } from "../component/opeThirdsSelect";
 import { OpeCategoriesSelect } from "../component/opeCategoriesSelect";
 import { BackgroundServiceModel } from '../service/models/background.service.model';
@@ -23,10 +25,7 @@ const Button = styled.button`
   }
 `;
 
-const Msg = styled.span`
-  font-size: 15px;
-  font-weight: 400;
-`;
+
 
 const Box = styled.div`
   display: flex;
@@ -34,7 +33,7 @@ const Box = styled.div`
 `
 
 const Import = () => {
-  const [currentMsg, setCurrentMsg] = React.useState('');
+  const { flash, showFlash } = useFlash();
   const [currentCategory, setCurrentCategory] = React.useState('1');
   const [currentThird, setCurrentThird] = React.useState('2');
 
@@ -56,7 +55,7 @@ const Import = () => {
      */
     const $labelDt = $('[data-e2e="transaction-layer-v2-level-1-type-card-original-label-value"]');
     inversify.loggerService.debug('$labelDt', $labelDt);
-    const description = $labelDt.text().trim() ?? 'Sans description';
+    const description = $labelDt.text().trim() || 'Sans description';
     inversify.loggerService.debug('description', description);
 
     /**
@@ -116,7 +115,9 @@ const Import = () => {
     inversify.loggerService.debug('data', data);
     const response: BackgroundServiceModel = await inversify.backgroundService.send(data);
     if (response.data.id) {
-      setCurrentMsg(`Operation crée avec l'id:${response.data.id}`);
+      showFlash(`Opération créée avec l'id:${response.data.id}`, 'INFO');
+    } else {
+      showFlash(`Opération non créée`, 'ERROR');
     }
   }
 
@@ -148,7 +149,7 @@ const Import = () => {
         >Importer</Button>
       </div>
       <div>
-        <Msg>{currentMsg}</Msg>
+        <FlashMessage flash={flash} />
       </div>
     </Box>
   )
