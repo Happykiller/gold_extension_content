@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { createPortal } from 'react-dom';
 import styled, { keyframes, css } from 'styled-components';
 
 export type FlashLevel = 'INFO' | 'DEBUG' | 'ERROR';
@@ -28,11 +29,16 @@ const COLORS: Record<FlashLevel, { bg: string; border: string; color: string }> 
 };
 
 // ── Styled wrapper ───────────────────────────────────────────────────────────
+// Floating toast pinned to the viewport. It is rendered through a portal into
+// document.body (see component below) so it escapes the bank panel's transformed /
+// overflow-clipped ancestors — otherwise `position: fixed` is reparented to the
+// panel and the message gets cropped behind a scrollbar. Max z-index keeps it on
+// top of the bank's own layers.
 const Wrapper = styled.div<{ level: FlashLevel; leaving: boolean }>`
   position: fixed;
   bottom: 1.2rem;
   right: 1.2rem;
-  z-index: 9999;
+  z-index: 2147483647;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -45,6 +51,7 @@ const Wrapper = styled.div<{ level: FlashLevel; leaving: boolean }>`
   color: ${({ level }) => COLORS[level].color};
   font-size: 0.82rem;
   font-weight: 500;
+  word-break: break-word;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   ${({ leaving }) =>
         leaving
@@ -67,17 +74,33 @@ interface Props {
 export const FlashMessage: React.FC<Props> = ({ flash }) => {
     const [leaving, setLeaving] = React.useState(false);
 
+    // Dedicated portal host appended to <body>, outside the bank panel's subtree.
+    const [portalEl] = React.useState<HTMLElement | null>(() => {
+        if (typeof document === 'undefined') return null;
+        const el = document.createElement('div');
+        el.className = 'gold_flash_portal';
+        return el;
+    });
+
+    React.useEffect(() => {
+        if (!portalEl) return;
+        document.body.appendChild(portalEl);
+        return () => { portalEl.remove(); };
+    }, [portalEl]);
+
     // Reset leaving state when a new message arrives
     React.useEffect(() => {
         setLeaving(false);
     }, [flash.message, flash.level]);
 
     if (!flash.visible && !leaving) return null;
+    if (!portalEl) return null;
 
-    return (
+    return createPortal(
         <Wrapper level={flash.level} leaving={leaving}>
             <Badge>[{flash.level}]</Badge>
             {flash.message}
-        </Wrapper>
+        </Wrapper>,
+        portalEl,
     );
 };

@@ -44,7 +44,7 @@ const Import = () => {
      * Get value — nouveau DOM : [data-e2e="balance"] dans le header du panel
      * Les spans enfants contiennent la partie entière puis ",00 €"
      */
-    const $balanceContainer = $('[data-e2e="transaction-layer-v2-level-1-header-balance"] [data-e2e="balance"]');
+    const $balanceContainer = $('[data-e2e="transaction-layer-level-1-header-balance"] [data-e2e="balance"]');
     inversify.loggerService.debug('$balanceContainer', $balanceContainer);
     // Concatène tous les spans pour reconstituer le montant complet, ex: "-30,00 €"
     const value = $balanceContainer.text().trim();
@@ -53,7 +53,7 @@ const Import = () => {
     /**
      * Get description — nouveau DOM : dt[data-e2e="...original-label-title"] + dd suivant
      */
-    const $labelDt = $('[data-e2e="transaction-layer-v2-level-1-type-card-original-label-value"]');
+    const $labelDt = $('[data-e2e="transaction-layer-level-1-type-card-original-label-value"]');
     inversify.loggerService.debug('$labelDt', $labelDt);
     const description = $labelDt.text().trim() || 'Sans description';
     inversify.loggerService.debug('description', description);
@@ -69,7 +69,7 @@ const Import = () => {
       'sept': '09', 'oct': '10', 'nov': '11', 'déc': '12'
     };
     let date = dayjs().format('YYYY-MM-DD');
-    const rawDate = $('[data-e2e="transaction-layer-v2-level-1-header-date"]').text().trim();
+    const rawDate = $('[data-e2e="transaction-layer-level-1-header-date"]').text().trim();
     inversify.loggerService.debug('rawDate', rawDate);
     if (rawDate) {
       // format attendu : "mer. 18 févr." — on extrait le jour et le mois

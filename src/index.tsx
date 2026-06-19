@@ -36,13 +36,13 @@ class GoldContent {
 
     // Look for the new transaction panel footer inside added nodes or their subtree
     let $footer: JQuery<HTMLElement> = $(domm.addedNodes)
-      .find("compte-transaction-layer-v2-level-1 > div.footer")
+      .find("compte-transaction-layer-level-1 > div.footer")
       .first();
 
     // Also check if the added node itself is the level-1 container
     if ($footer.length === 0) {
       $footer = $(domm.addedNodes)
-        .filter("compte-transaction-layer-v2-level-1")
+        .filter("compte-transaction-layer-level-1")
         .find("> div.footer")
         .first();
     }
